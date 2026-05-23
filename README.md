@@ -4,6 +4,12 @@ A controller tester for the Mayflash GameCube adapter on Linux, available as bot
 
 ![Controller Tester Screenshot](screenshot.png)
 
+## Download
+
+Pre-compiled binaries for Linux are available on the [Releases](https://github.com/alex-engelmann/gc_controller_tester/releases) page.
+
+Download the latest `gc-controller-tester-v*.zip`, extract it, and follow the First Time Setup instructions below.
+
 ## Programs
 
 ### gc_gui_controller_tester — graphical tester
@@ -44,7 +50,7 @@ python3 gc_cli_controller_tester.py
 
 ## First Time Setup
 
-Clone or download this repository, then run the udev setup script once:
+Run the udev setup script once:
 
 ```bash
 ./install-udev-rules.sh
