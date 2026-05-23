@@ -1,6 +1,6 @@
 # GameCube Controller Tester
 
-A controller tester for the Mayflash GameCube adapter on Linux, available as both a graphical and command line application.
+A controller tester for the Mayflash GameCube adapter on Bazzite (should work on other Linux distributions) , available as both a graphical and command line application.
 
 ![Controller Tester Screenshot](screenshot.png)
 
@@ -13,27 +13,33 @@ Download the latest `gc-controller-tester-v*.zip`, extract it, and follow the Fi
 ## Programs
 
 ### gc_gui_controller_tester — graphical tester
-Displays a real-time overlay on a GameCube controller image showing button presses, analog stick positions, and trigger values. Built with Python and Tkinter.
+
+Displays a real-time overlay on a GameCube controller image showing button presses, analog stick positions, and trigger values.  Allow testing rumble as well. Built with Python and Tkinter.
 
 **Binary:**
+
 ```bash
 ./gc_gui_controller_tester
 ```
 
 **Python:**
+
 ```bash
 python3 gc_gui_controller_tester.py
 ```
 
 ### gc_cli_controller_tester — command line tester
-Prints button and axis events to the terminal as they occur. Useful for scripting, debugging, or headless systems.
+
+Prints button and axis events to the terminal as they occur. Does not test the controller's rumble feature.
 
 **Binary:**
+
 ```bash
 ./gc_cli_controller_tester
 ```
 
 **Python:**
+
 ```bash
 python3 gc_cli_controller_tester.py
 ```
@@ -41,9 +47,11 @@ python3 gc_cli_controller_tester.py
 ## Requirements
 
 ### Using the binaries
+
 - `libusb` (usually pre-installed on Bazzite/Fedora/Ubuntu)
 
 ### Using the Python scripts
+
 - Python 3
 - `pyusb` and `Pillow` Python packages
 - `libusb` (usually pre-installed on Bazzite/Fedora/Ubuntu)
@@ -67,6 +75,7 @@ In PC mode the Mayflash adapter identifies itself as a Pokken Tournament control
 ## Troubleshooting
 
 **`libusb` not found:**
+
 ```bash
 # Fedora
 sudo dnf install libusb
@@ -76,24 +85,24 @@ sudo apt install libusb-1.0-0
 ```
 
 **`pyusb` or `Pillow` not found (Python only):**
+
 ```bash
 pip install pyusb pillow
 ```
 
 **Device not found / permission error:**
+
 - Make sure the adapter is in Wii U mode
 - Re-run `./install-udev-rules.sh`
 - Unplug and replug the adapter
 
 **Controller not responding:**
+
 - Check the controller is plugged into port 1 of the adapter
 
 **Only one program can use the adapter at a time:**
+
 - Close any other instance of the tester before launching a second one
-
-## How it works
-
-Both programs communicate directly with the adapter via libusb, bypassing the Linux kernel's HID input layer entirely. They read raw 37-byte USB packets from the adapter at endpoint `0x81`, decoding button states and axis values according to the Wii U GameCube adapter protocol.
 
 ## Building from source
 
@@ -104,6 +113,7 @@ pip install pyinstaller
 ```
 
 **GUI:**
+
 ```bash
 pyinstaller --onefile --windowed \
   --add-data "controller.png:." \
@@ -113,6 +123,7 @@ pyinstaller --onefile --windowed \
 ```
 
 **CLI:**
+
 ```bash
 pyinstaller --onefile \
   --name "gc_cli_controller_tester" \
@@ -120,6 +131,20 @@ pyinstaller --onefile \
 ```
 
 Compiled binaries will appear in the `dist/` folder.
+
+## FAQ
+
+### How does it work?
+
+Both programs communicate directly with the adapter via libusb, bypassing the Linux kernel's HID input layer entirely. They read raw 37-byte USB packets from the adapter at endpoint `0x81`, decoding button states and axis values according to the Wii U GameCube adapter protocol.
+
+### Why did you make this?
+
+Adding a rule to udev got the controller working correctly in Bazzite using Wii U mode on Dolphin, but there was still no good way to test the controller's buttons.  Dolphin doesn't have a GUI for testing it (just a small dialog with a couple of options), and Bazzite's System Settings -> Game Controller was inaccurate, so I made this tester.
+
+### Are you affiliated with Nintendo or Mayflash?
+
+Not at all, I did this for fun and hope it will help anyone else using a similar hardware and software setup.
 
 ## Image credit
 
