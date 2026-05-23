@@ -1,6 +1,6 @@
 # GameCube Controller Tester
 
-A controller tester for the Mayflash GameCube adapter on Linux, available as both a graphical and command line application.
+A controller tester for the Mayflash Gamecube Controller Adapter on Linux, available as both a graphical and command line application.
 
 ![Controller Tester Screenshot](screenshot.png)
 
