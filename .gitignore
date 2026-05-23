@@ -1,0 +1,18 @@
+# PyInstaller build artifacts (not the binaries themselves)
+build/
+*.spec
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Python eggs
+*.egg-info/
+
+# Virtual environments
+venv/
+.venv/
+
+# OS files
+.DS_Store
+Thumbs.db
