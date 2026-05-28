@@ -1,6 +1,6 @@
 # GameCube Controller Tester
 
-A controller tester for the Mayflash GameCube adapter on Bazzite (should work on other Linux distributions) , available as both a graphical and command line application.
+A controller tester for the Mayflash GameCube adapter when in Wii U mode on Bazzite (should work on other Linux distributions) , available as both a graphical and command line application.
 
 ![Controller Tester Screenshot](screenshot.png)
 
@@ -66,11 +66,15 @@ Run the udev setup script once:
 
 This creates `/etc/udev/rules.d/51-gcadapter.rules`, which gives the application permission to access the adapter and unbinds the default kernel HID driver so the app can communicate with it directly via libusb.
 
-After running the script, unplug and replug your adapter.
+After running the script, open Dolphin and in the controller settings make sure to set Gamecube Controller Adapter.  Unplug and replug your adapter.  Make sure it's in Wii Mode, not PC Mode.  
 
 ## Why Wii U mode?
 
-In PC mode the Mayflash adapter identifies itself as a Pokken Tournament controller with an incomplete HID descriptor — the C-stick Y axis is missing entirely. In Wii U mode it presents as a Nintendo Wii U GameCube Adapter (`057e:0337`), which allows direct libusb access and full input fidelity across all axes and buttons.
+In PC mode the Mayflash adapter identifies itself as a Pokken Tournament controller. In Wii U mode it presents as a Nintendo Wii U GameCube Adapter (`057e:0337`), which allows direct libusb access and full input fidelity across all axes and buttons.
+
+### What if I want to use PC Mode instead?
+
+You won't need any of this, but you'll need to open Dolphin and map all the buttons/axes as well as rumble.  In PC mode it will work for navigating Retrodeck menus, but overall input fidelity may be decreased?  I'm not sure on that last point as it seems to work ok in my experience.
 
 ## Troubleshooting
 
@@ -140,7 +144,7 @@ Both programs communicate directly with the adapter via libusb, bypassing the Li
 
 ### Why did you make this?
 
-Adding a rule to udev got the controller working correctly in Bazzite using Wii U mode on Dolphin, but there was still no good way to test the controller's buttons.  Dolphin doesn't have a GUI for testing it (just a small dialog with a couple of options), and Bazzite's System Settings -> Game Controller was inaccurate, so I made this tester.
+Adding a rule to udev got the controller working correctly in Bazzite using Wii U mode on Dolphin, but there was still no good way to test the controller's buttons.  Dolphin doesn't have a GUI for testing it in Wii U Mode (just a small dialog with a couple of options), and Bazzite's System Settings -> Game Controller was inaccurate, so I made this tester.
 
 ### Are you affiliated with Nintendo or Mayflash?
 
