@@ -58,7 +58,7 @@ python3 gc_cli_controller_tester.py
 
 ## First Time Setup
 
-Run the udev setup script once:
+Run the udev setup script once (may need elevated permissions):
 
 ```bash
 ./install-udev-rules.sh
@@ -66,7 +66,7 @@ Run the udev setup script once:
 
 This creates `/etc/udev/rules.d/51-gcadapter.rules`, which gives the application permission to access the adapter and unbinds the default kernel HID driver so the app can communicate with it directly via libusb.
 
-After running the script, open Dolphin and in the controller settings make sure to set Gamecube Controller Adapter.  Unplug and replug your adapter.  Make sure it's in Wii Mode, not PC Mode.  
+After running the script, open Dolphin and in the controller settings make sure to set Gamecube Controller Adapter.  Unplug and replug your adapter.  Make sure it's in Wii Mode, not PC Mode.  Dolphin should automatically recognize it, no button/axes mappings needed.
 
 ## Why Wii U mode?
 
