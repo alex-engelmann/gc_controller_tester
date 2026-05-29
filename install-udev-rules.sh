@@ -1,14 +1,31 @@
 #!/bin/bash
-echo "Installing GameCube adapter udev rules..."
-sudo tee /etc/udev/rules.d/51-gcadapter.rules << 'RULES'
-# Allow non-root users to access the Mayflash GC adapter in Wii U mode
-# (idVendor 057e = Nintendo, idProduct 0337 = Wii U GameCube Adapter)
-SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="0337", MODE="0666"
+# =============================================================================
+# Mayflash GameCube Adapter udev Rules Installer
+# =============================================================================
+# Installs udev rules that allow non-root access to the Mayflash GameCube
+# adapter (Wii U mode) and unbind the usbhid kernel driver so libusb can
+# claim the device directly.
+#
+# Requirements:
+#   - "51-gcadapter.rules" in the same directory as this script
+#
+# Usage:
+#   chmod +x install-gcadapter-udev.sh
+#   ./install-gcadapter-udev.sh
+# =============================================================================
 
-# Unbind the kernel's usbhid driver from the adapter when it is connected
-# This is required so the app can access it directly via libusb
-# %k is replaced by the kernel device name at runtime
-SUBSYSTEM=="usb", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="0337", DRIVER=="usbhid", RUN+="/bin/sh -c 'echo -n %k > /sys/bus/usb/drivers/usbhid/unbind'"
-RULES
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+RULES_SRC="$SCRIPT_DIR/51-gcadapter.rules"
+RULES_DST="/etc/udev/rules.d/51-gcadapter.rules"
+
+if [ ! -f "$RULES_SRC" ]; then
+    echo "ERROR: '51-gcadapter.rules' not found in $SCRIPT_DIR. Please place it alongside this script."
+    exit 1
+fi
+
+echo "Installing GameCube adapter udev rules..."
+sudo cp "$RULES_SRC" "$RULES_DST"
 sudo udevadm control --reload-rules && sudo udevadm trigger
 echo "Done. Unplug and replug your adapter, then run gc_gui_controller_tester.py or gc_cli_controller_tester.py."
